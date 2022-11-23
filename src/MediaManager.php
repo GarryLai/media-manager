@@ -103,7 +103,7 @@ class MediaManager extends Extension
      */
     protected function getFullPath($path)
     {
-        $fullPath = $this->storage->getDriver()->getAdapter()->applyPathPrefix($path);
+        $fullPath = Storage::disk('local')->applyPathPrefix($path);
         if (strstr($fullPath, '..')) {
             throw new \Exception('Incorrect path');
         }
