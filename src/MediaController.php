@@ -12,7 +12,7 @@ class MediaController extends Controller
     public function index(Request $request)
     {
         return Admin::content(function (Content $content) use ($request) {
-            $content->header('媒體管理');
+            $content->header(__('admin.media-manager'));
 
             $path = $request->get('path', '/');
             $view = $request->get('view', 'table');
