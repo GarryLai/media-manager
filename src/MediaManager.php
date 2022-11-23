@@ -78,7 +78,7 @@ class MediaManager extends Extension
     public function ls()
     {
         if (!$this->exists()) {
-            Handler::error('Error', "File or directory [$this->path] not exists");
+            Handler::error('錯誤', "路徑 [$this->path] 不存在");
 
             return [];
         }
@@ -103,7 +103,7 @@ class MediaManager extends Extension
      */
     protected function getFullPath($path)
     {
-        $fullPath = Storage::disk('local')->getAdapter()->applyPathPrefix($path);
+        $fullPath = Storage::disk('local')->path($path);
         if (strstr($fullPath, '..')) {
             throw new \Exception('Incorrect path');
         }
@@ -265,13 +265,7 @@ class MediaManager extends Extension
     {
         switch ($this->detectFileType($file)) {
             case 'image':
-
-                if ($this->storage->getDriver()->getConfig()->has('url')) {
-                    $url = $this->storage->url($file);
-                    $preview = "<span class=\"file-icon has-img\"><img src=\"$url\" alt=\"Attachment\"></span>";
-                } else {
-                    $preview = '<span class="file-icon"><i class="fa fa-file-image-o"></i></span>';
-                }
+                $preview = '<span class="file-icon"><i class="fa fa-file-image-o"></i></span>';
                 break;
 
             case 'pdf':

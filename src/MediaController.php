@@ -12,7 +12,7 @@ class MediaController extends Controller
     public function index(Request $request)
     {
         return Admin::content(function (Content $content) use ($request) {
-            $content->header('Media manager');
+            $content->header('媒體管理');
 
             $path = $request->get('path', '/');
             $view = $request->get('view', 'table');
@@ -52,7 +52,7 @@ class MediaController extends Controller
 
         try {
             if ($manager->upload($files)) {
-                admin_toastr(trans('admin.upload_succeeded'));
+                admin_toastr('上傳成功');
             }
         } catch (\Exception $e) {
             admin_toastr($e->getMessage(), 'error');
@@ -71,7 +71,7 @@ class MediaController extends Controller
             if ($manager->delete($files)) {
                 return response()->json([
                     'status'  => true,
-                    'message' => trans('admin.delete_succeeded'),
+                    'message' => '刪除成功',
                 ]);
             }
         } catch (\Exception $e) {
@@ -93,7 +93,7 @@ class MediaController extends Controller
             if ($manager->move($new)) {
                 return response()->json([
                     'status'  => true,
-                    'message' => trans('admin.move_succeeded'),
+                    'message' => '移動成功',
                 ]);
             }
         } catch (\Exception $e) {
@@ -115,7 +115,7 @@ class MediaController extends Controller
             if ($manager->newFolder($name)) {
                 return response()->json([
                     'status'  => true,
-                    'message' => trans('admin.move_succeeded'),
+                    'message' => '新增成功',
                 ]);
             }
         } catch (\Exception $e) {

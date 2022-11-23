@@ -269,10 +269,10 @@ $(function () {
 
                 <div class="mailbox-controls with-border">
                     <div class="btn-group">
-                        <a href="" type="button" class="btn btn-default btn media-reload" title="Refresh">
+                        <a href="" type="button" class="btn btn-default btn media-reload" title="刷新">
                             <i class="fa fa-refresh"></i>
                         </a>
-                        <a type="button" class="btn btn-default btn file-delete-multiple" title="Delete">
+                        <a type="button" class="btn btn-default btn file-delete-multiple" title="刪除">
                             <i class="fa fa-trash-o"></i>
                         </a>
                     </div>
@@ -326,6 +326,9 @@ $(function () {
                         <li style="height: 200px;border: none;"></li>
                     @else
                         @foreach($list as $item)
+                        @if ($item['name'] == '.gitignore')
+                            @continue
+                        @endif
                         <li>
                             <span class="file-select">
                                 <input type="checkbox" value="{{ $item['name'] }}"/>
@@ -343,16 +346,16 @@ $(function () {
                                 <div class="btn-group btn-group-xs pull-right">
                                     <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
                                         <span class="caret"></span>
-                                        <span class="sr-only">Toggle Dropdown</span>
+                                        <span class="sr-only">選單</span>
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#" class="file-rename" data-toggle="modal" data-target="#moveModal" data-name="{{ $item['name'] }}">Rename & Move</a></li>
-                                        <li><a href="#" class="file-delete" data-path="{{ $item['name'] }}">Delete</a></li>
+                                        <li><a href="#" class="file-rename" data-toggle="modal" data-target="#moveModal" data-name="{{ $item['name'] }}">重命名、移動</a></li>
+                                        <li><a href="#" class="file-delete" data-path="{{ $item['name'] }}">刪除</a></li>
                                         @unless($item['isDir'])
-                                        <li><a target="_blank" href="{{ $item['download'] }}">Download</a></li>
+                                        <li><a target="_blank" href="{{ $item['download'] }}">下載</a></li>
                                         @endunless
                                         <li class="divider"></li>
-                                        <li><a href="#" data-toggle="modal" data-target="#urlModal" data-url="{{ $item['url'] }}">Url</a></li>
+                                        <li><a href="#" data-toggle="modal" data-target="#urlModal" data-url="{{ $item['url'] }}">路徑</a></li>
                                     </ul>
                                 </div>
                             </span>
@@ -375,19 +378,19 @@ $(function () {
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="moveModalLabel">Rename & Move</h4>
+                <h4 class="modal-title" id="moveModalLabel">重命名、移動</h4>
             </div>
             <form id="file-move">
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="recipient-name" class="control-label">Path:</label>
+                    <label for="recipient-name" class="control-label">路徑:</label>
                     <input type="text" class="form-control" name="new" />
                 </div>
                 <input type="hidden" name="path"/>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
+                <button type="submit" class="btn btn-primary btn-sm">確定</button>
             </div>
             </form>
         </div>
@@ -399,7 +402,7 @@ $(function () {
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="urlModalLabel">Url</h4>
+                <h4 class="modal-title" id="urlModalLabel">路徑</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group">
@@ -407,7 +410,7 @@ $(function () {
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">關閉</button>
             </div>
         </div>
     </div>
@@ -418,7 +421,7 @@ $(function () {
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="newFolderModalLabel">New folder</h4>
+                <h4 class="modal-title" id="newFolderModalLabel">新建資料夾</h4>
             </div>
             <form id="new-folder">
                 <div class="modal-body">
@@ -429,8 +432,8 @@ $(function () {
                     {{ csrf_field() }}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary btn-sm">確定</button>
                 </div>
             </form>
         </div>
