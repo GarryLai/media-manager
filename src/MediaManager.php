@@ -331,8 +331,12 @@ class MediaManager extends Extension
 
     public function getFileChangeTime($file)
     {
-        $time = filectime($this->getFullPath($file));
+        if (is_file($this->getFullPath($file))) {
+            $time = File::lastModified($this->getFullPath($file));
 
-        return date('Y-m-d H:i:s', $time);
+            return date('Y-m-d H:i:s', $time);
+        } else {
+            return '';
+        }
     }
 }
